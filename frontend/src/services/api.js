@@ -1,4 +1,4 @@
-const BASE_URL = "newsapp-production-1704.up.railway.app";
+const BASE_URL = "https://newsapp-production-1704.up.railway.app";
 
 export const request = async (
   url,
