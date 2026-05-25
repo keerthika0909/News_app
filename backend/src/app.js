@@ -1,27 +1,32 @@
 const express = require("express");
 const cors = require("cors");
 
+const authRoutes = require("./routes/authRoutes");
+const newsRoutes = require("./routes/newsRoutes");
+const favouriteRoutes = require("./routes/favouriteRoutes");
+
 const app = express();
 
-// CORS
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:3000",
+      "https://news-app-llrm.vercel.app"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
   })
 );
 
 app.use(express.json());
 
-// Test Route
 app.get("/", (req, res) => {
   res.send("Backend Running Successfully");
 });
 
-// Routes
-app.use("/auth", require("./routes/authRoutes"));
-app.use("/news", require("./routes/newsRoutes"));
-app.use("/fav", require("./routes/favouriteRoutes"));
+app.use("/auth", authRoutes);
+app.use("/news", newsRoutes);
+app.use("/fav", favouriteRoutes);
 
 module.exports = app;
