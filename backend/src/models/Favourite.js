@@ -1,62 +1,83 @@
 const db = require("../../config/db");
 
-exports.addFavourite = (
+exports.addFavourite = async (
   userId,
   article,
   cb
 ) => {
 
-  db.query(
+  try {
 
-    `
-    INSERT INTO favourites
-    (user_id, title, url, image)
-    VALUES (?, ?, ?, ?)
-    `,
+    const [result] = await db.query(
 
-    [
-      userId,
-      article.title,
-      article.url,
-      article.urlToImage
-    ],
+      `
+      INSERT INTO favourites
+      (user_id, title, url, image)
+      VALUES (?, ?, ?, ?)
+      `,
 
-    cb
-  );
+      [
+        userId,
+        article.title,
+        article.url,
+        article.urlToImage
+      ]
+    );
+
+    cb(null, result);
+
+  } catch (err) {
+
+    cb(err, null);
+  }
 };
 
-exports.getFavourites = (
+exports.getFavourites = async (
   userId,
   cb
 ) => {
 
-  db.query(
+  try {
 
-    `
-    SELECT * FROM favourites
-    WHERE user_id = ?
-    `,
+    const [rows] = await db.query(
 
-    [userId],
+      `
+      SELECT * FROM favourites
+      WHERE user_id = ?
+      `,
 
-    cb
-  );
+      [userId]
+    );
+
+    cb(null, rows);
+
+  } catch (err) {
+
+    cb(err, null);
+  }
 };
 
-exports.removeFavourite = (
+exports.removeFavourite = async (
   id,
   cb
 ) => {
 
-  db.query(
+  try {
 
-    `
-    DELETE FROM favourites
-    WHERE id = ?
-    `,
+    const [result] = await db.query(
 
-    [id],
+      `
+      DELETE FROM favourites
+      WHERE id = ?
+      `,
 
-    cb
-  );
+      [id]
+    );
+
+    cb(null, result);
+
+  } catch (err) {
+
+    cb(err, null);
+  }
 };

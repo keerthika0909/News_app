@@ -1,13 +1,49 @@
 const db = require("../../config/db");
 
-exports.createUser = (name, email, password, cb) => {
-  db.query(
-    "INSERT INTO users (name,email,password) VALUES (?,?,?)",
-    [name, email, password],
-    cb
-  );
+exports.createUser = async (
+  name,
+  email,
+  password,
+  cb
+) => {
+
+  try {
+
+    const [result] = await db.query(
+
+      "INSERT INTO users (name,email,password) VALUES (?,?,?)",
+
+      [name, email, password]
+
+    );
+
+    cb(null, result);
+
+  } catch (err) {
+
+    cb(err, null);
+  }
 };
 
-exports.findUserByEmail = (email, cb) => {
-  db.query("SELECT * FROM users WHERE email=?", [email], cb);
+exports.findUserByEmail = async (
+  email,
+  cb
+) => {
+
+  try {
+
+    const [rows] = await db.query(
+
+      "SELECT * FROM users WHERE email=?",
+
+      [email]
+
+    );
+
+    cb(null, rows);
+
+  } catch (err) {
+
+    cb(err, null);
+  }
 };
