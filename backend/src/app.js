@@ -13,8 +13,14 @@ app.use(
       "http://localhost:3000",
       "https://news-app-llrm.vercel.app"
     ],
+
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization"
+    ],
+
     credentials: true
   })
 );
